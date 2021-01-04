@@ -4,9 +4,11 @@
   <header>
     <h1>{{ .Title }}</h1>
     <div>
-      <div class="c-time">
-        {{ partial "timestamp.html" . }}
-      </div>
+      {{ if not .Params.hideDate }}
+        <div class="c-time">
+          {{ partial "timestamp.html" . }}
+        </div>
+      {{ end }}
       {{ range .Params.tags }}
       <a href="{{ $baseurl }}/tags/{{ . | urlize }}" class="c-tag">{{ . }}</a>
       {{ end }}
@@ -19,6 +21,7 @@
     {{ .Content }}
   </section>
   <footer>
+    {{ partial "comment_custom.html" . }}
     {{ with ($.Param "disqus") }}
     <div id="disqus_thread"></div>
     <script>
